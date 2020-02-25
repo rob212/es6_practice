@@ -97,30 +97,30 @@ console.log('                                       ');
 //////////////////////////////////////
 // Strings in ES6
 
-let firstName = 'Rob';
-let lastName = 'McBryde';
-const yearOfBirth = 1983;
+// let firstName = 'Rob';
+// let lastName = 'McBryde';
+// const yearOfBirth = 1983;
 
-function calcAge(year) {
-    return 2020 - year;
-};
+// function calcAge(year) {
+//     return 2020 - year;
+// };
 
-// ES5 
-console.log('This is firstName: ' + firstName + ', lastName: ' + lastName + '. Born in: ' + yearOfBirth + '. So they are ' + calcAge(yearOfBirth) + ' years old.');
+// // ES5 
+// console.log('This is firstName: ' + firstName + ', lastName: ' + lastName + '. Born in: ' + yearOfBirth + '. So they are ' + calcAge(yearOfBirth) + ' years old.');
 
-//ES6 - template literals using back ticks `
-console.log(`This is firstName: ${firstName}, lastName: ${lastName}. Born in: ${yearOfBirth}. So they are ${calcAge(yearOfBirth)} years old.`);
+// //ES6 - template literals using back ticks `
+// console.log(`This is firstName: ${firstName}, lastName: ${lastName}. Born in: ${yearOfBirth}. So they are ${calcAge(yearOfBirth)} years old.`);
 
-// THere are also some new string methods in ES6
-const n = `${firstName} ${lastName}`;
-console.log(n.startsWith('R'));
-console.log(n.startsWith('r'));
-console.log(n.endsWith('McB'));
-console.log(n.endsWith('de'));
-console.log(n.includes(' '));
-console.log(n.includes(' R'));
+// // THere are also some new string methods in ES6
+// const n = `${firstName} ${lastName}`;
+// console.log(n.startsWith('R'));
+// console.log(n.startsWith('r'));
+// console.log(n.endsWith('McB'));
+// console.log(n.endsWith('de'));
+// console.log(n.includes(' '));
+// console.log(n.includes(' R'));
 
-console.log(`${firstName} `.repeat(5));
+// console.log(`${firstName} `.repeat(5));
 
 
 console.log('                                       ');
@@ -225,3 +225,45 @@ const friends = ['Bob', 'Jane', 'Mark'];
 new Person('Mike').myFriends6(friends);
 
 
+console.log('                                       ');
+
+// ======================================================================================================================
+
+
+//////////////////////////////////////
+// Destructuring - a convenient way to extract data from an array
+
+
+
+// ES5
+var john = ['John', 26];
+//var name = john[0];
+//var age = john[1];
+
+// ES6
+const [name, age] = ['John', 26];
+console.log(name);
+console.log(age);
+
+const obj = {
+    firstName: 'John',
+    lastName: 'Smith'
+};
+
+const {firstName, lastName} = obj;
+console.log(firstName, lastName);
+
+// can provide aliases after a colon
+const {firstName: a, lastName: b} = obj;
+console.log(a,b);
+
+// Returning multiple items from a function 
+// ES6 
+function calcAgeAndRetirement(year) {
+    const age = new Date().getFullYear() - year;
+    return [age, 65 - age];
+}
+
+const [age2, retirement] = calcAgeAndRetirement(1990);
+console.log(age2);
+console.log(retirement);
