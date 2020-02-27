@@ -267,3 +267,341 @@ function calcAgeAndRetirement(year) {
 const [age2, retirement] = calcAgeAndRetirement(1990);
 console.log(age2);
 console.log(retirement);
+
+console.log('                                       ');
+
+// ======================================================================================================================
+
+
+//////////////////////////////////////
+// Arrays in ES6
+
+// this returns a nodelist. We want to easily convert it to a box.
+const boxes = document.querySelectorAll('.box');
+
+// ES5
+// var boxesArr5 = Array.prototype.slice.call(boxes);
+// boxesArr5.forEach(function(cur) {
+//     cur.style.backgroundColor = 'dodgerblue';
+// });
+
+// ES6 
+// const boxesArr6 = Array.from(boxes).forEach(cur => cur.style.backgroundColor = 'dodgerblue');
+
+
+// Suppose we want to changethe text content in each of the html boxes in index.html
+// ES5
+// continue from within a loop
+
+
+// for (var k = 0; k < boxesArr5.length; k++) {
+//     if (boxesArr5[k].className === 'box blue') {
+//         continue;
+//     }
+//     boxesArr5[k].textContent = 'I changed to blue!';
+// }
+
+
+// const boxesArr6 = Array.from(boxes).forEach(cur => cur.style.backgroundColor = 'dodgerblue');
+// console.log(`say what: ${boxesArr6}`);
+// // ES6 - has a new 'for of' loop 
+// for (const cur of boxesArr6) {
+//     if (cur.className.includes('dodgerblue')) {
+//         continue;
+//     }
+//     cur.textContent = 'I changed to blue';
+// }
+
+
+
+// ES5 - check if array of ages are 18 or older
+var ages = [12, 17, 8, 21, 14, 11];
+var full = ages.map(function(curr) {
+    return curr >= 18
+});
+console.log(full);
+console.log(full.indexOf(true));
+console.log('The person is: ' + ages[full.indexOf(true)] + ' years old');
+
+
+// ES6 - same with find methods added to ES6
+// findIndex gives you the index of the element according to the callback function passing true
+// find gives you the content of the array if the callback function holds true on it. 
+console.log(ages.findIndex(cur => cur >= 18));
+console.log(ages.find(cur => cur >= 18));
+
+
+
+
+
+console.log('                                       ');
+
+// ======================================================================================================================
+
+
+//////////////////////////////////////
+// The new SPREAD operator in ES6
+
+// its a convenient way to expand elements of an array in places like function calls and arguments 
+
+function addFourAges(a, b, c, d) {
+    return a + b + c + d;
+}
+
+var sum1 = addFourAges(18, 30, 12, 21);
+console.log(sum1);
+
+// imagine we had these four numbers in a n array rather than indivucally and we wanted them to be passed to the function
+
+// ES5 
+// the apply 1st param is 'this' but in this case we don't need it so its null. Here the addFourAges method will be called 4 times each with the different element in the ages array.
+var ages = [18, 30, 12, 21];
+var sum2 = addFourAges.apply(null, ages);
+console.log(sum2);
+
+// ES6 - spread operator allows your you use each entry in an array as a param
+const sum3 = addFourAges(...ages);
+console.log(sum3);
+
+const familySmith = ['John', 'Jane', 'Mark'];
+const familyMiller = ['Mary', 'Bob', 'Anna'];
+
+const bigFamily = [...familySmith, 'Lily', ...familyMiller];
+console.log(bigFamily);
+
+// we can also use the spread operation on NodeLists
+const h = document.querySelector('h1');
+const all = [h, ...boxes];
+console.log(all);
+
+Array.from(all).forEach(cur => cur.style.color = 'purple');
+
+console.log('                                       ');
+
+// ======================================================================================================================
+
+
+//////////////////////////////////////
+// Rest parameters - allow us to pass an arbitrary number of arguements into a function
+
+// ES5
+
+// // arguments is like the this keyword. All functions have access to it and it lists the arguements it received.
+// function isFullAge5() {
+//     console.log(arguments);
+//     var argsArr = Array.prototype.slice.call(arguments);
+//     console.log(argsArr);
+//     argsArr.forEach(function(cur) {
+//         console.log((2020 - cur) >= 18);
+//     });
+// }
+
+// isFullAge5(1990, 1999, 1965);
+
+
+// // ES6
+// function isFullAge6(...args) {
+//     args.forEach(cur => console.log((2020 - cur) >= 18));
+// }
+
+// isFullAge6(1990, 1999, 1965);
+
+
+
+
+// ES6 - you can also have one normal arguement then the rest params arg
+function isFullAge6(limit, ...args) {
+    args.forEach(cur => {
+        console.log('hello');
+        console.log(limit);
+        console.log(cur);
+        console.log((2020 - cur) >= limit)
+    });
+}
+
+isFullAge6(21, 1990, 1999, 1965);
+
+
+
+console.log('                                       ');
+
+// ======================================================================================================================
+
+
+//////////////////////////////////////
+// Default params
+
+//ES5 
+// function SmithPerson(firstName, yearOfBirth, lastName, nationality) {
+//     lastName ===  undefined ? lastName = 'Smith' : lastName = lastName;
+
+//     this.firstName = firstName;
+//     this.lastName = lastName;
+//     this.yearOfBirth = yearOfBirth;
+//     this.nationality = nationality;
+// }
+
+// // lastname and nationality will be undefined but lastname has default in ES5 work around
+// var john = new SmithPerson('John', 1990);
+// console.log(john);
+// var julie = new SmithPerson('Julie', 1990, 'Grant', 'British');
+// console.log(julie);
+
+
+//ES6 -- so much easier in ES6
+function SmithPerson(firstName, yearOfBirth, lastName = 'Smith', nationality) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.yearOfBirth = yearOfBirth;
+    this.nationality = nationality;
+}
+
+var john = new SmithPerson('John', 1990);
+console.log(john);
+
+
+
+
+console.log('                                       ');
+
+
+
+// ======================================================================================================================
+
+
+//////////////////////////////////////
+// Maps are completely new in ES6
+
+// We can use anything as a key, primitives, functions or objects. 
+
+const question = new Map();
+question.set('question', 'What is the official name of the latest major JS version?');
+question.set(1, 'ES5');
+question.set(2, 'ES6');
+question.set(3, 'ES2015');
+question.set(4, 'ES7');
+question.set('correct', 3);
+question.set(true, 'Correct answer!');
+question.set(false, 'Wrong, please try again.');
+
+console.log(question.get('question'));
+// note its size for maps not a length
+// console.log(question.size);
+
+if(question.has(4)) {
+    question.delete(4);
+}
+
+// question.clear()
+
+// We can also loop through Maps
+// question.forEach((value, key) => console.log(key, value));
+
+for(let [key, value] of question.entries()) {
+    if(typeof(key) === 'number') {
+        console.log(`Answer ${key}: ${value}`);
+    }
+}
+
+const ans = parseInt(prompt('Write the correct answer'));
+console.log(question.get(ans === question.get('correct')));
+
+
+
+console.log('                                       ');
+
+
+
+// ======================================================================================================================
+
+
+//////////////////////////////////////
+// Classes -  are completely new in ES6
+
+// They don't do anything new that prototypes and function constructors do in Es5 just so much nicer
+
+
+//ES5
+var Person5 = function(name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+};
+
+Person5.prototype.calculateAge = function() {
+    var age = new Date().getFullYear() - this.yearOfBirth;
+    console.log(age);
+}
+
+var john5 = new Person5('John', 1990, 'teacher');
+john5.calculateAge();
+
+
+// ES6 - every class MUST have a constructor in ES6. You don't need any commas or semi colons in a class either
+// classes are not hoisted so we need to declare then in a file before we use them. 
+// We can also only add methods to classes NOT properties
+class Person6 {
+    constructor(name, yearOfBirth, job) {
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.job = job;
+    }
+    // no need for the function keyword in ES6 when in a class for a method.
+    calculateAge() {
+        var age = new Date().getFullYear() - this.yearOfBirth;
+        console.log(`${this.name} is currently ${age} years old.`);
+    }
+
+    // can use static methods too
+    static greeting() {
+        console.log('Howdy there!');
+    }
+}
+
+let jane6 = new Person6('Jane', 1987, 'coder');
+jane6.calculateAge();
+Person6.greeting();
+
+
+//////////////////////////////////////
+// Subclasses in ES6
+
+
+//first how to do it in ES5
+// use the Person 5 from above - its so nasty 
+var Athlete5 = function (name, yearOfBirth, job, olympicGames, medals) {
+    // call is used to enjoy the this varible is set to this object with its Person context also
+    Person5.call(this, name, yearOfBirth, job);
+    this.olympicGames = olympicGames;
+    this.medals = medals;
+}
+
+Athlete5.prototype = Object.create(Person5.prototype);
+
+var johnAthlete5 = new Athlete5('John', 1990, 'swimmer', 3, 10);
+johnAthlete5.calculateAge();
+
+Athlete5.prototype.wonMedal = function() {
+    this.medals++;
+    console.log(this.medals);
+}
+johnAthlete5.wonMedal();
+
+
+// ES6 
+class Athlete6 extends Person6 {
+    constructor(name, yearOfBirth, job, olympicGames, medals) {
+        super(name, yearOfBirth, job);
+        this.olympicGames = olympicGames;
+        this.medals = medals;
+    }
+
+    wonMedal() {
+        this.medals++;
+        console.log(this.medals);
+    }
+}
+
+const janeAthlete6 = new Athlete6('Jane', 1965, 'sprinter', 4, 2);
+janeAthlete6.wonMedal();
+janeAthlete6.calculateAge();
